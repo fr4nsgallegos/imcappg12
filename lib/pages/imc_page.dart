@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:imcappg12/models/imc_model.dart';
 import 'package:imcappg12/widgets/slider_widget.dart';
 
 class ImcPage extends StatefulWidget {
@@ -11,17 +12,19 @@ class ImcPage extends StatefulWidget {
 
 class ImcPageState extends State<ImcPage> {
   double altura = 0, peso = 0, imcResut = 0;
-  Map<String, dynamic>? selectectImcMap;
+  // Map<String, dynamic>? selectectImcMap;
 
-  void seleccionImcModel() {
+  ImcModel? selectedImcModel;
+
+  void seleccionImcMap() {
     if (imcResut > 0 && imcResut < 18.5) {
-      selectectImcMap = imcMapList[0];
+      selectedImcModel = imcModelList[0];
     } else if (imcResut >= 18.5 && imcResut <= 24.9) {
-      selectectImcMap = imcMapList[1];
+      selectedImcModel = imcModelList[1];
     } else if (imcResut >= 25.0 && imcResut <= 29.9) {
-      selectectImcMap = imcMapList[2];
+      selectedImcModel = imcModelList[2];
     } else {
-      selectectImcMap = imcMapList[3];
+      selectedImcModel = imcModelList[3];
     }
   }
 
@@ -33,30 +36,6 @@ class ImcPageState extends State<ImcPage> {
     imcResut = roundedDecimal(peso / ((altura * altura) / 10000));
     print(imcResut);
   }
-
-  List<Map<String, dynamic>> imcMapList = [
-    {
-      "title": "Bajo peso",
-      "recomendation": "Se debe alimentar con los nutrientes necesarios",
-      "pathImage": "delgadez",
-    },
-    {
-      "title": "Normal",
-      "recomendation": "El IMC  es normal, manten tu dieta balanceada",
-      "pathImage": "normal",
-    },
-    {
-      "title": "Sobrepeso",
-      "recomendation": "Salir a correr 1 o 2 veces a la semana y toma agua",
-      "pathImage": "sobrepeso",
-    },
-    {
-      "title": "Obesidad",
-      "recomendation":
-          "Realiza una dieta balanceada y haz ejercicio 4 o 5 vveces a la semana",
-      "pathImage": "delgadez",
-    },
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +75,7 @@ class ImcPageState extends State<ImcPage> {
               child: ElevatedButton(
                 onPressed: () {
                   calcularImc();
+                  seleccionImcMap();
                   setState(() {});
                 },
                 style: ElevatedButton.styleFrom(
@@ -115,16 +95,16 @@ class ImcPageState extends State<ImcPage> {
               imcResut.toString(),
               style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
             ),
-            Text(selectectImcMap?["title"] ?? "-"),
+            Text(selectedImcModel?.title ?? "-"),
             SizedBox(height: 34),
-            Text(
-              "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a asdasd asdasd asd asas dasdard McClintock,",
-            ),
-            SvgPicture.asset(
-              "assets/svg/normal.svg",
-              width: MediaQuery.of(context).size.width / 1.5,
-              // color: Colors.red,
-            ),
+            Text(selectedImcModel?.recomendation ?? "-"),
+            selectedImcModel == null
+                ? Text("Realiza el calculo para ver el resultado")
+                : SvgPicture.asset(
+                  "assets/svg/${selectedImcModel!.pathImage}.svg",
+                  width: MediaQuery.of(context).size.width / 1.5,
+                  // color: Colors.red,
+                ),
           ],
         ),
       ),
