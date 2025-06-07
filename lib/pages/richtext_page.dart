@@ -10,6 +10,7 @@ class RichtextPage extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
+            // RICHTEXT COMÚN
             RichText(
               text: TextSpan(
                 text: "Texto base",
@@ -18,11 +19,32 @@ class RichtextPage extends StatelessWidget {
                   TextSpan(
                     text: " En negrita",
                     style: TextStyle(fontWeight: FontWeight.bold),
+                    children: [
+                      TextSpan(
+                        text: " con underline",
+                        style: TextStyle(decoration: TextDecoration.underline),
+                      ),
+                    ],
                   ),
                   TextSpan(
                     text: " Y en Roojo",
                     style: TextStyle(color: Colors.red),
                   ),
+                ],
+              ),
+            ),
+
+            // SIMULANDO SUBINDICES
+            RichText(
+              text: TextSpan(
+                style: TextStyle(color: Colors.cyan, fontSize: 50),
+                children: [
+                  TextSpan(text: "H"),
+                  TextSpan(
+                    text: "2",
+                    style: TextStyle(fontSize: 30, color: Colors.red),
+                  ),
+                  TextSpan(text: "O"),
                 ],
               ),
             ),
