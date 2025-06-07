@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
 
-class RichtextPage extends StatelessWidget {
-  const RichtextPage({super.key});
+class RichtextPage extends StatefulWidget {
+  @override
+  State<RichtextPage> createState() => _RichtextPageState();
+}
+
+class _RichtextPageState extends State<RichtextPage> {
+  bool isImportant = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          isImportant = !isImportant;
+          setState(() {});
+        },
+      ),
       appBar: AppBar(title: Text("Rich Text Page")),
       body: Center(
         child: Column(
@@ -61,6 +72,25 @@ class RichtextPage extends StatelessWidget {
                   TextSpan(
                     text: " Más texto",
                     style: TextStyle(color: Colors.black, fontSize: 18),
+                  ),
+                ],
+              ),
+            ),
+
+            // CON CONDICIONALES
+            RichText(
+              text: TextSpan(
+                style: TextStyle(color: Colors.black),
+                children: [
+                  TextSpan(text: "Este es un texto "),
+                  TextSpan(
+                    text: isImportant ? "IMPORTANTE" : "normal",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight:
+                          isImportant ? FontWeight.bold : FontWeight.normal,
+                      color: isImportant ? Colors.red : Colors.orange,
+                    ),
                   ),
                 ],
               ),
