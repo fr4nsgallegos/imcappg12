@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:imcappg12/widgets/slider_widget.dart';
 
 class ImcPage extends StatefulWidget {
   const ImcPage({super.key});
@@ -19,71 +21,63 @@ class ImcPageState extends State<ImcPage> {
         backgroundColor: Colors.blueAccent,
         foregroundColor: Colors.white,
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Container(
-              child: Column(
-                children: [
-                  Text("Altura"),
-                  RichText(
-                    text: TextSpan(
-                      style: TextStyle(color: Colors.black),
-                      children: [
-                        TextSpan(
-                          text: altura.toString(),
-                          style: TextStyle(fontSize: 28),
-                        ),
-                        TextSpan(text: "cm", style: TextStyle(fontSize: 12)),
-                      ],
-                    ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            SliderWidget(
+              valor: altura,
+              title: "Altura",
+              unidadMedida: "Kg",
+              onChanged: (nuevoValor) {
+                altura = double.parse(nuevoValor.toStringAsFixed(2));
+                setState(() {});
+              },
+            ),
+            SliderWidget(
+              valor: peso,
+              title: "Peso",
+              unidadMedida: "Cm",
+              onChanged: (nuevoValor) {
+                peso = double.parse(nuevoValor.toStringAsFixed(2));
+                setState(() {});
+              },
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 16),
+              height: 50,
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  Slider(
-                    min: 0,
-                    max: 200,
-                    activeColor: Colors.blue,
-                    value: altura,
-                    onChanged: (double value) {
-                      altura = value;
-                      setState(() {});
-                    },
-                  ),
-                ],
+                  shadowColor: Colors.orange,
+                  elevation: 8,
+                ),
+                child: Text("Calcular"),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              children: [
-                Text("Peso"),
-                RichText(
-                  text: TextSpan(
-                    style: TextStyle(color: Colors.black),
-                    children: [
-                      TextSpan(
-                        text: peso.toString(),
-                        style: TextStyle(fontSize: 28),
-                      ),
-                      TextSpan(text: "Kg", style: TextStyle(fontSize: 12)),
-                    ],
-                  ),
-                ),
-                Slider(
-                  min: 0,
-                  max: 200,
-                  activeColor: Colors.blue,
-                  value: peso,
-                  onChanged: (double value) {
-                    peso = value;
-                    setState(() {});
-                  },
-                ),
-              ],
+            Divider(height: 36),
+            Text(
+              "20.1",
+              style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
             ),
-          ),
-        ],
+            Text("Normal"),
+            SizedBox(height: 34),
+            Text(
+              "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a asdasd asdasd asd asas dasdard McClintock,",
+            ),
+            SvgPicture.asset(
+              "assets/svg/normal.svg",
+              width: MediaQuery.of(context).size.width / 1.5,
+              color: Colors.red,
+            ),
+          ],
+        ),
       ),
     );
   }

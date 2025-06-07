@@ -3,8 +3,15 @@ import 'package:flutter/material.dart';
 class SliderWidget extends StatefulWidget {
   double valor;
   String title;
+  String unidadMedida;
+  ValueChanged<double> onChanged;
 
-  SliderWidget({required this.valor, required this.title});
+  SliderWidget({
+    required this.valor,
+    required this.title,
+    required this.unidadMedida,
+    required this.onChanged,
+  });
 
   @override
   State<SliderWidget> createState() => _SliderWidgetState();
@@ -26,7 +33,10 @@ class _SliderWidgetState extends State<SliderWidget> {
                   text: widget.valor.toString(),
                   style: TextStyle(fontSize: 28),
                 ),
-                TextSpan(text: "Kg", style: TextStyle(fontSize: 12)),
+                TextSpan(
+                  text: widget.unidadMedida,
+                  style: TextStyle(fontSize: 12),
+                ),
               ],
             ),
           ),
@@ -35,10 +45,7 @@ class _SliderWidgetState extends State<SliderWidget> {
             max: 200,
             activeColor: Colors.blue,
             value: widget.valor,
-            onChanged: (double value) {
-              widget.valor = value;
-              setState(() {});
-            },
+            onChanged: widget.onChanged,
           ),
         ],
       ),
