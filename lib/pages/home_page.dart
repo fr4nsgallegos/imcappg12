@@ -85,6 +85,24 @@ class _HomePageState extends State<HomePage> {
             buildSliderRow(opacity, "Opacity", "o", Colors.black, (val) {
               opacity = val;
             }),
+
+            CheckboxListTile(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
+              ),
+              title: Text("Esta selececcionado "),
+              subtitle: Text("Este es el Subtitulo"),
+              secondary: Icon(Icons.notification_add),
+              enabled: true,
+              checkColor: Colors.red,
+              tileColor: Colors.orange,
+              value: isChecked,
+              onChanged: (bool? mandarina) {
+                isChecked = mandarina;
+                // print(isChecked);
+                setState(() {});
+              },
+            ),
           ],
         ),
       ),
