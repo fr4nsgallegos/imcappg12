@@ -10,7 +10,49 @@ class ImcPage extends StatefulWidget {
 }
 
 class ImcPageState extends State<ImcPage> {
-  double altura = 0, peso = 0;
+  double altura = 0, peso = 0, imcResut = 0;
+  Map<String, dynamic>? selectectImcMap;
+
+  void seleccionImcModel() {
+    if (imcResut > 0 && imcResut < 18.5) {
+      selectectImcMap = imcMapList[0];
+    } else if (imcResut >= 18.5 && imcResut <= 24.9) {
+      selectectImcMap = imcMapList[1];
+    } else if (imcResut >= 25.0 && imcResut <= 29.9) {
+      selectectImcMap = imcMapList[2];
+    } else {
+      selectectImcMap = imcMapList[3];
+    }
+  }
+
+  void calcularImc() {
+    print(imcResut);
+    imcResut = peso / (altura * altura);
+  }
+
+  List<Map<String, dynamic>> imcMapList = [
+    {
+      "title": "Bajo peso",
+      "recomendation": "Se debe alimentar con los nutrientes necesarios",
+      "pathImage": "delgadez",
+    },
+    {
+      "title": "Normal",
+      "recomendation": "El IMC  es normal, manten tu dieta balanceada",
+      "pathImage": "normal",
+    },
+    {
+      "title": "Sobrepeso",
+      "recomendation": "Salir a correr 1 o 2 veces a la semana y toma agua",
+      "pathImage": "sobrepeso",
+    },
+    {
+      "title": "Obesidad",
+      "recomendation":
+          "Realiza una dieta balanceada y haz ejercicio 4 o 5 vveces a la semana",
+      "pathImage": "delgadez",
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +70,7 @@ class ImcPageState extends State<ImcPage> {
             SliderWidget(
               valor: altura,
               title: "Altura",
-              unidadMedida: "Kg",
+              unidadMedida: "Cm.",
               onChanged: (nuevoValor) {
                 altura = double.parse(nuevoValor.toStringAsFixed(2));
                 setState(() {});
@@ -37,7 +79,7 @@ class ImcPageState extends State<ImcPage> {
             SliderWidget(
               valor: peso,
               title: "Peso",
-              unidadMedida: "Cm",
+              unidadMedida: "Kg",
               onChanged: (nuevoValor) {
                 peso = double.parse(nuevoValor.toStringAsFixed(2));
                 setState(() {});
@@ -48,7 +90,9 @@ class ImcPageState extends State<ImcPage> {
               height: 50,
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  calcularImc();
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
                   foregroundColor: Colors.white,
@@ -74,7 +118,7 @@ class ImcPageState extends State<ImcPage> {
             SvgPicture.asset(
               "assets/svg/normal.svg",
               width: MediaQuery.of(context).size.width / 1.5,
-              color: Colors.red,
+              // color: Colors.red,
             ),
           ],
         ),
