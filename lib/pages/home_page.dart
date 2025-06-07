@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("IMC APP")),
+      appBar: AppBar(title: Text("TEXT EDITING  APP")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
