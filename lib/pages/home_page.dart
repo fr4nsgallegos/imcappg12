@@ -11,6 +11,8 @@ class _HomePageState extends State<HomePage> {
   bool? isChecked = false;
   double fontSize = 15;
 
+  bool isOverline = false;
+
   Widget buildSliderRow(
     double variable,
     String title,
@@ -68,6 +70,8 @@ class _HomePageState extends State<HomePage> {
                   blue.toInt(),
                   opacity,
                 ),
+                decoration:
+                    isOverline ? TextDecoration.overline : TextDecoration.none,
               ),
             ),
             buildSliderRow(fontSize, "Tamaño", "t", Colors.cyan, (val) {
@@ -90,15 +94,14 @@ class _HomePageState extends State<HomePage> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(25),
               ),
-              title: Text("Esta selececcionado "),
-              subtitle: Text("Este es el Subtitulo"),
-              secondary: Icon(Icons.notification_add),
-              enabled: true,
-              checkColor: Colors.red,
-              tileColor: Colors.orange,
-              value: isChecked,
+              title: Text("Overline"),
+              subtitle: Text("Aplicar Overline"),
+              secondary: Icon(Icons.format_overline),
+              checkColor: Colors.blue,
+              tileColor: Colors.blueGrey,
+              value: isOverline,
               onChanged: (bool? mandarina) {
-                isChecked = mandarina;
+                isOverline = mandarina ?? false;
                 // print(isChecked);
                 setState(() {});
               },
