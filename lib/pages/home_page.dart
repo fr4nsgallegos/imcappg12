@@ -11,7 +11,32 @@ class _HomePageState extends State<HomePage> {
   bool? isChecked = false;
   double fontSize = 15;
 
-  bool isOverline = false;
+  bool isOverline = false, isUnderline = false, isLineThrough = false;
+
+  Widget buildTextDecorationCheck(
+    String title,
+    bool value,
+    IconData icondata,
+    Function(bool) onChangedFunction,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: CheckboxListTile(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+        title: Text(title),
+        subtitle: Text("Aplicar $title"),
+        secondary: Icon(icondata),
+        checkColor: Colors.blue,
+        tileColor: Colors.blueGrey,
+        value: value,
+        onChanged: (bool? mandarina) {
+          onChangedFunction(mandarina!);
+          setState(() {});
+          // print(isChecked);
+        },
+      ),
+    );
+  }
 
   Widget buildSliderRow(
     double variable,
@@ -70,8 +95,17 @@ class _HomePageState extends State<HomePage> {
                   blue.toInt(),
                   opacity,
                 ),
-                decoration:
-                    isOverline ? TextDecoration.overline : TextDecoration.none,
+                decoration: TextDecoration.combine([
+                  if (isUnderline) TextDecoration.underline,
+                  if (isOverline) TextDecoration.overline,
+                  if (isLineThrough) TextDecoration.lineThrough,
+                ]),
+                // TextDecoration.combine([
+                //   TextDecoration.lineThrough,
+                //   TextDecoration.overline,
+                //   TextDecoration.underline,
+                // ]),
+                // isOverline ? TextDecoration.overline : TextDecoration.none,
               ),
             ),
             buildSliderRow(fontSize, "Tamaño", "t", Colors.cyan, (val) {
@@ -89,21 +123,28 @@ class _HomePageState extends State<HomePage> {
             buildSliderRow(opacity, "Opacity", "o", Colors.black, (val) {
               opacity = val;
             }),
-
-            CheckboxListTile(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(25),
-              ),
-              title: Text("Overline"),
-              subtitle: Text("Aplicar Overline"),
-              secondary: Icon(Icons.format_overline),
-              checkColor: Colors.blue,
-              tileColor: Colors.blueGrey,
-              value: isOverline,
-              onChanged: (bool? mandarina) {
-                isOverline = mandarina ?? false;
-                // print(isChecked);
-                setState(() {});
+            buildTextDecorationCheck(
+              "Overline",
+              isOverline,
+              Icons.format_overline,
+              (val) {
+                isOverline = val;
+              },
+            ),
+            buildTextDecorationCheck(
+              "Underline",
+              isUnderline,
+              Icons.format_underline,
+              (val) {
+                isUnderline = val;
+              },
+            ),
+            buildTextDecorationCheck(
+              "lineTrougth",
+              isLineThrough,
+              Icons.line_axis,
+              (val) {
+                isLineThrough = val;
               },
             ),
           ],
