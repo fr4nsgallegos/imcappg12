@@ -25,9 +25,13 @@ class ImcPageState extends State<ImcPage> {
     }
   }
 
+  double roundedDecimal(double number) {
+    return double.parse(number.toStringAsFixed(2));
+  }
+
   void calcularImc() {
+    imcResut = roundedDecimal(peso / ((altura * altura) / 10000));
     print(imcResut);
-    imcResut = peso / (altura * altura);
   }
 
   List<Map<String, dynamic>> imcMapList = [
@@ -72,7 +76,7 @@ class ImcPageState extends State<ImcPage> {
               title: "Altura",
               unidadMedida: "Cm.",
               onChanged: (nuevoValor) {
-                altura = double.parse(nuevoValor.toStringAsFixed(2));
+                altura = roundedDecimal(nuevoValor);
                 setState(() {});
               },
             ),
@@ -81,7 +85,7 @@ class ImcPageState extends State<ImcPage> {
               title: "Peso",
               unidadMedida: "Kg",
               onChanged: (nuevoValor) {
-                peso = double.parse(nuevoValor.toStringAsFixed(2));
+                peso = roundedDecimal(nuevoValor);
                 setState(() {});
               },
             ),
@@ -92,6 +96,7 @@ class ImcPageState extends State<ImcPage> {
               child: ElevatedButton(
                 onPressed: () {
                   calcularImc();
+                  setState(() {});
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
@@ -107,10 +112,10 @@ class ImcPageState extends State<ImcPage> {
             ),
             Divider(height: 36),
             Text(
-              "20.1",
+              imcResut.toString(),
               style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
             ),
-            Text("Normal"),
+            Text(selectectImcMap?["title"] ?? "-"),
             SizedBox(height: 34),
             Text(
               "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a asdasd asdasd asd asas dasdard McClintock,",
